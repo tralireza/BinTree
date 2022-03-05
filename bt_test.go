@@ -72,3 +72,10 @@ func Test1325(t *testing.T) {
 		fmt.Println()
 	}
 }
+
+// 979m Distribute Coins in Binary Tree
+func Test979(t *testing.T) {
+	type T = TreeNode
+	log.Print("2 ?= ", distributeCoins(&T{3, &T{Val: 0}, &T{Val: 0}}))
+	log.Print("3 ?= ", distributeCoins(&T{0, &T{Val: 3}, &T{Val: 0}}))
+}

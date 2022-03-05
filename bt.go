@@ -25,3 +25,28 @@ func removeLeafNodes(root *TreeNode, target int) *TreeNode {
 	}
 	return root
 }
+
+// 979m Distribute Coins in Binary Tree
+func distributeCoins(root *TreeNode) int {
+	abs := func(v int) int {
+		if v < 0 {
+			return -v
+		}
+		return v
+	}
+
+	moves := 0
+	var Walk func(*TreeNode) int
+	Walk = func(n *TreeNode) int {
+		if n == nil {
+			return 0
+		}
+
+		l, r := Walk(n.Left), Walk(n.Right)
+		moves += abs(l) + abs(r)
+		return n.Val - 1 + l + r
+	}
+
+	Walk(root)
+	return moves
+}
