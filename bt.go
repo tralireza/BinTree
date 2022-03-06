@@ -50,3 +50,25 @@ func distributeCoins(root *TreeNode) int {
 	Walk(root)
 	return moves
 }
+
+// 1026m Maximum Difference Between Node and Ancestor
+func maxAncestorDiff(root *TreeNode) int {
+	x := 0
+
+	var Diff func(n *TreeNode, mn, mx int)
+	Diff = func(n *TreeNode, mn, mx int) {
+		x = max(x, mx-mn)
+
+		if n.Left != nil {
+			ln, lx := min(n.Left.Val, mn), max(n.Left.Val, mx)
+			Diff(n.Left, ln, lx)
+		}
+		if n.Right != nil {
+			rn, rx := min(n.Right.Val, mn), max(n.Right.Val, mx)
+			Diff(n.Right, rn, rx)
+		}
+	}
+
+	Diff(root, root.Val, root.Val)
+	return x
+}

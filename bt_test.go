@@ -79,3 +79,10 @@ func Test979(t *testing.T) {
 	log.Print("2 ?= ", distributeCoins(&T{3, &T{Val: 0}, &T{Val: 0}}))
 	log.Print("3 ?= ", distributeCoins(&T{0, &T{Val: 3}, &T{Val: 0}}))
 }
+
+// 1026m Maximum Difference Between Node and Ancestor
+func Test1026(t *testing.T) {
+	type T = TreeNode
+
+	log.Print("7 ?= ", maxAncestorDiff(&T{8, &T{3, &T{Val: 1}, &T{6, &T{Val: 4}, &T{Val: 7}}}, &T{10, nil, &T{14, &T{Val: 13}, nil}}}))
+}
