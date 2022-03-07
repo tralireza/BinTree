@@ -1,6 +1,9 @@
 package BinTree
 
-import "log"
+import (
+	"container/list"
+	"log"
+)
 
 func init() {
 	log.SetFlags(0)
@@ -71,4 +74,43 @@ func maxAncestorDiff(root *TreeNode) int {
 
 	Diff(root, root.Val, root.Val)
 	return x
+}
+
+// 2385m Amount of Time for Binary Tree to Be Infected
+func amountOfTime(root *TreeNode, start int) int {
+	lsAdj := map[int][]int{}
+
+	var Walk func(*TreeNode, int)
+	Walk = func(n *TreeNode, pVal int) {
+		if n == nil {
+			return
+		}
+
+		if pVal != -1 {
+			lsAdj[pVal] = append(lsAdj[pVal], n.Val)
+			lsAdj[n.Val] = append(lsAdj[n.Val], pVal)
+		}
+		Walk(n.Left, n.Val)
+		Walk(n.Right, n.Val)
+	}
+	Walk(root, -1)
+	log.Print("BT -> Graph :: ", lsAdj)
+
+	Q := list.New()
+	Q.PushBack(start)
+	Vis := map[int]bool{start: true}
+	t := 0
+	for Q.Len() > 0 {
+		for range Q.Len() {
+			v := Q.Remove(Q.Front()).(int)
+			for _, u := range lsAdj[v] {
+				if !Vis[u] {
+					Vis[u] = true
+					Q.PushBack(u)
+				}
+			}
+		}
+		t++
+	}
+	return t - 1
 }

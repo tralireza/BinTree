@@ -86,3 +86,10 @@ func Test1026(t *testing.T) {
 
 	log.Print("7 ?= ", maxAncestorDiff(&T{8, &T{3, &T{Val: 1}, &T{6, &T{Val: 4}, &T{Val: 7}}}, &T{10, nil, &T{14, &T{Val: 13}, nil}}}))
 }
+
+// 2385m Amount of Time for Binary Tree to Be Infected
+func Test2385(t *testing.T) {
+	type T = TreeNode
+
+	log.Print("4 ?= ", amountOfTime(&T{1, &T{5, nil, &T{4, &T{Val: 9}, &T{Val: 2}}}, &T{3, &T{Val: 10}, &T{Val: 6}}}, 3))
+}
