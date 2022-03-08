@@ -15,6 +15,17 @@ type TreeNode struct {
 	Left, Right *TreeNode
 }
 
+func (o TreeNode) String() string {
+	l, r := '*', '*'
+	if o.Left == nil {
+		l = '-'
+	}
+	if o.Right == nil {
+		r = '-'
+	}
+	return fmt.Sprintf("{%c %d %c}", l, o.Val, r)
+}
+
 // 1325m Delete Leaves With a Given Value
 func removeLeafNodes(root *TreeNode, target int) *TreeNode {
 	if root == nil {
@@ -85,16 +96,16 @@ func amountOfTime(root *TreeNode, start int) int {
 		if n == nil {
 			return
 		}
+		lsAdj[pVal] = append(lsAdj[pVal], n.Val)
+		lsAdj[n.Val] = append(lsAdj[n.Val], pVal)
 
-		if pVal != -1 {
-			lsAdj[pVal] = append(lsAdj[pVal], n.Val)
-			lsAdj[n.Val] = append(lsAdj[n.Val], pVal)
-		}
 		Walk(n.Left, n.Val)
 		Walk(n.Right, n.Val)
 	}
-	Walk(root, -1)
-	log.Print("BT -> Graph :: ", lsAdj)
+	Walk(root.Left, root.Val)
+	Walk(root.Right, root.Val)
+
+	log.Print("BT -> G :: ", lsAdj)
 
 	Q := list.New()
 	Q.PushBack(start)

@@ -89,7 +89,43 @@ func Test1026(t *testing.T) {
 
 // 2385m Amount of Time for Binary Tree to Be Infected
 func Test2385(t *testing.T) {
+	OnPass := func(root *TreeNode, start int) int {
+		t := 0
+
+		var Walk func(*TreeNode) int
+		Walk = func(n *TreeNode) int {
+			if n == nil {
+				return 0
+			}
+
+			l, r := Walk(n.Left), Walk(n.Right)
+
+			log.Print(l, r, n)
+
+			if n.Val == start {
+				t = max(l, r)
+				return -1
+			} else if l >= 0 && r >= 0 {
+				return max(l, r) + 1
+			} else {
+				if l < 0 {
+					t = max(t, r-l)
+					return l - 1
+				} else {
+					t = max(t, l-r)
+					return r - 1
+				}
+			}
+		}
+
+		log.Print(" -> ", Walk(root))
+		return t
+	}
+
 	type T = TreeNode
 
-	log.Print("4 ?= ", amountOfTime(&T{1, &T{5, nil, &T{4, &T{Val: 9}, &T{Val: 2}}}, &T{3, &T{Val: 10}, &T{Val: 6}}}, 3))
+	for _, f := range []func(*TreeNode, int) int{amountOfTime, OnPass} {
+		log.Print("4 ?= ", f(&T{1, &T{5, nil, &T{4, &T{Val: 9}, &T{Val: 2}}}, &T{3, &T{Val: 10}, &T{Val: 6}}}, 3))
+		log.Print("0 ?= ", f(&T{Val: 1}, 1))
+	}
 }
