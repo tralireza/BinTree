@@ -87,6 +87,39 @@ func Test1026(t *testing.T) {
 	log.Print("7 ?= ", maxAncestorDiff(&T{8, &T{3, &T{Val: 1}, &T{6, &T{Val: 4}, &T{Val: 7}}}, &T{10, nil, &T{14, &T{Val: 13}, nil}}}))
 }
 
+// 1382m Balance a Binary Search Tree
+func Test1382(t *testing.T) {
+	type T = TreeNode
+	Draw := func(n *TreeNode) {
+		Q := []*TreeNode{}
+		Q = append(Q, n)
+		for len(Q) > 0 {
+			for range len(Q) {
+				n, Q = Q[0], Q[1:]
+				fmt.Print(n)
+
+				if n.Left != nil {
+					Q = append(Q, n.Left)
+				}
+				if n.Right != nil {
+					Q = append(Q, n.Right)
+				}
+			}
+			fmt.Print("\n")
+		}
+	}
+
+	for _, tree := range []*T{
+		&T{1, nil, &T{2, nil, &T{3, nil, &T{Val: 4}}}},
+		&T{2, &T{Val: 1}, &T{Val: 3}},
+	} {
+		log.Print("==")
+		Draw(tree)
+		log.Print("->")
+		Draw(balanceBST(tree))
+	}
+}
+
 // 2385m Amount of Time for Binary Tree to Be Infected
 func Test2385(t *testing.T) {
 	OnPass := func(root *TreeNode, start int) int {

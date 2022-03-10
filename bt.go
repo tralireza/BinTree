@@ -2,6 +2,7 @@ package BinTree
 
 import (
 	"container/list"
+	"fmt"
 	"log"
 )
 
@@ -85,6 +86,35 @@ func maxAncestorDiff(root *TreeNode) int {
 
 	Diff(root, root.Val, root.Val)
 	return x
+}
+
+// 1382m Balance a Binary Search Tree
+func balanceBST(root *TreeNode) *TreeNode {
+	V := []int{}
+
+	var InOrder func(*TreeNode)
+	InOrder = func(n *TreeNode) {
+		if n == nil {
+			return
+		}
+		InOrder(n.Left)
+		V = append(V, n.Val)
+		InOrder(n.Right)
+	}
+
+	InOrder(root)
+
+	var Build func(l, r int) *TreeNode
+	Build = func(l, r int) *TreeNode {
+		if l > r {
+			return nil
+		}
+
+		m := l + (r-l)>>1
+		return &TreeNode{Val: V[m], Left: Build(l, m-1), Right: Build(m+1, r)}
+	}
+
+	return Build(0, len(V)-1)
 }
 
 // 2385m Amount of Time for Binary Tree to Be Infected
