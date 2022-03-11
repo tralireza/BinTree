@@ -87,6 +87,28 @@ func Test1026(t *testing.T) {
 	log.Print("7 ?= ", maxAncestorDiff(&T{8, &T{3, &T{Val: 1}, &T{6, &T{Val: 4}, &T{Val: 7}}}, &T{10, nil, &T{14, &T{Val: 13}, nil}}}))
 }
 
+// 1038m Binary Search Tree to Greater Sum Tree
+func Test1038(t *testing.T) {
+	var Draw func(*TreeNode)
+	Draw = func(n *TreeNode) {
+		if n == nil {
+			return
+		}
+
+		fmt.Print(n)
+		Draw(n.Left)
+		Draw(n.Right)
+	}
+
+	type T = TreeNode
+
+	tree := &T{4, &T{1, &T{Val: 0}, &T{2, nil, &T{Val: 3}}}, &T{6, &T{Val: 5}, &T{7, nil, &T{Val: 8}}}}
+	Draw(tree)
+	log.Print("\n -> \n")
+	Draw(bstToGst(tree))
+	fmt.Print("\n")
+}
+
 // 1382m Balance a Binary Search Tree
 func Test1382(t *testing.T) {
 	type T = TreeNode

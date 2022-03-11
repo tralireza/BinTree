@@ -88,6 +88,25 @@ func maxAncestorDiff(root *TreeNode) int {
 	return x
 }
 
+// 1038m Binary Search Tree to Greater Sum Tree
+func bstToGst(root *TreeNode) *TreeNode {
+	nVal := 0
+	var RInOrder func(*TreeNode)
+	RInOrder = func(n *TreeNode) {
+		if n == nil {
+			return
+		}
+
+		RInOrder(n.Right)
+		nVal += n.Val
+		n.Val = nVal
+		RInOrder(n.Left)
+	}
+
+	RInOrder(root)
+	return root
+}
+
 // 1382m Balance a Binary Search Tree
 func balanceBST(root *TreeNode) *TreeNode {
 	V := []int{}
